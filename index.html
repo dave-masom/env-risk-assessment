@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conserv Environmental Risk Analyzer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Conserv Environmental Risk Analyzer</h1>
+            <p class="subtitle">Material-Specific Assessment for Collection Preservation</p>
+        </header>
+
+        <main>
+            <section class="collection-type-section">
+                <h2>Collection Type</h2>
+                <p class="instructions">Select the primary material type in your collection for tailored risk assessment</p>
+
+                <div class="collection-type-selector">
+                    <select id="collectionType">
+                        <option value="general">General Mixed Collection</option>
+                        <option value="paper">Paper & Manuscripts</option>
+                        <option value="photographs-bw">Black & White Photographs</option>
+                        <option value="photographs-color">Color Photographs & Film</option>
+                        <option value="textiles">Textiles & Fabrics</option>
+                        <option value="leather">Leather & Parchment</option>
+                        <option value="metal">Metal Objects</option>
+                        <option value="metal-sensitive">Sensitive Metals (Iron, Bronze)</option>
+                        <option value="magnetic-tape">Magnetic Tape & Audio</option>
+                        <option value="optical-media">Optical Media (CDs, DVDs)</option>
+                        <option value="wood">Wood & Furniture</option>
+                    </select>
+                    <p class="collection-info" id="collectionInfo">Recommendations based on general preservation standards</p>
+                </div>
+            </section>
+
+            <section class="calculator-section">
+                <h2>Environmental Parameters</h2>
+                <p class="instructions">Enter any 2 values - calculations update automatically</p>
+
+                <div class="input-grid">
+                    <div class="input-group">
+                        <label for="temperature">Temperature (°F)</label>
+                        <div class="input-with-controls">
+                            <button class="decrement-btn" data-input="temperature">−</button>
+                            <input type="number" id="temperature" step="0.1" placeholder="--">
+                            <button class="increment-btn" data-input="temperature">+</button>
+                        </div>
+                        <button class="solve-btn" data-solve="temperature">Solve</button>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="relativeHumidity">Relative Humidity (%)</label>
+                        <div class="input-with-controls">
+                            <button class="decrement-btn" data-input="relativeHumidity">−</button>
+                            <input type="number" id="relativeHumidity" min="0" max="100" step="0.1" placeholder="--">
+                            <button class="increment-btn" data-input="relativeHumidity">+</button>
+                        </div>
+                        <button class="solve-btn" data-solve="relativeHumidity">Solve</button>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="dewPoint">Dew Point (°F)</label>
+                        <div class="input-with-controls">
+                            <button class="decrement-btn" data-input="dewPoint">−</button>
+                            <input type="number" id="dewPoint" step="0.1" placeholder="--">
+                            <button class="increment-btn" data-input="dewPoint">+</button>
+                        </div>
+                        <button class="solve-btn" data-solve="dewPoint">Solve</button>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="absoluteHumidity">Absolute Humidity (g/m³)</label>
+                        <div class="input-with-controls">
+                            <button class="decrement-btn" data-input="absoluteHumidity">−</button>
+                            <input type="number" id="absoluteHumidity" step="0.01" placeholder="--">
+                            <button class="increment-btn" data-input="absoluteHumidity">+</button>
+                        </div>
+                        <button class="solve-btn" data-solve="absoluteHumidity">Solve</button>
+                    </div>
+                </div>
+
+                <div class="fluctuation-section">
+                    <h3>24-Hour Fluctuation (Optional)</h3>
+                    <p class="fluctuation-info">Environmental stability is critical for preservation. Enter typical daily fluctuations if known.</p>
+                    <div class="fluctuation-grid">
+                        <div class="input-group">
+                            <label for="tempFluctuation">Temp Variation (±°F)</label>
+                            <div class="input-with-controls">
+                                <button class="decrement-btn" data-input="tempFluctuation">−</button>
+                                <input type="number" id="tempFluctuation" min="0" step="0.5" placeholder="--">
+                                <button class="increment-btn" data-input="tempFluctuation">+</button>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label for="rhFluctuation">RH Variation (±%)</label>
+                            <div class="input-with-controls">
+                                <button class="decrement-btn" data-input="rhFluctuation">−</button>
+                                <input type="number" id="rhFluctuation" min="0" step="0.5" placeholder="--">
+                                <button class="increment-btn" data-input="rhFluctuation">+</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fluctuation-warning" id="fluctuationWarning">
+                        <h4>⚠️ Stability Concern</h4>
+                        <p id="fluctuationMessage"></p>
+                    </div>
+                </div>
+
+                <div class="button-row">
+                    <button id="clearBtn" class="secondary-btn">Clear All</button>
+                </div>
+            </section>
+
+            <section class="decay-section" id="decaySection" style="display: none;">
+                <h2>Decay Risk Assessment</h2>
+                <p class="decay-intro" id="decayIntro">Risk ratings for preservation of collection materials</p>
+                <div class="optimal-range" id="optimalRange" style="display: none;">
+                    <h3>Optimal Conditions for <span id="materialTypeName"></span></h3>
+                    <div class="range-display">
+                        <div class="range-item">
+                            <span class="range-label">Temperature:</span>
+                            <span class="range-value" id="optimalTemp">-</span>
+                        </div>
+                        <div class="range-item">
+                            <span class="range-label">Relative Humidity:</span>
+                            <span class="range-value" id="optimalRH">-</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="decay-grid">
+                    <div class="decay-card">
+                        <h3>Natural Aging</h3>
+                        <div class="rating-display" id="ratingNaturalAging">
+                            <div class="rating-bar"></div>
+                            <span class="rating-text">-</span>
+                        </div>
+                        <p class="decay-description">Chemical deterioration rate of organic materials</p>
+                    </div>
+
+                    <div class="decay-card">
+                        <h3>Mechanical Decay</h3>
+                        <div class="rating-display" id="ratingMechanicalDecay">
+                            <div class="rating-bar"></div>
+                            <span class="rating-text">-</span>
+                        </div>
+                        <p class="decay-description">Physical damage from dimensional changes</p>
+                    </div>
+
+                    <div class="decay-card">
+                        <h3>Mold Growth</h3>
+                        <div class="rating-display" id="ratingMoldGrowth">
+                            <div class="rating-bar"></div>
+                            <span class="rating-text">-</span>
+                        </div>
+                        <p class="decay-description">Risk of fungal growth on materials</p>
+                    </div>
+
+                    <div class="decay-card">
+                        <h3>Metal Corrosion</h3>
+                        <div class="rating-display" id="ratingMetalCorrosion">
+                            <div class="rating-bar"></div>
+                            <span class="rating-text">-</span>
+                        </div>
+                        <p class="decay-description">Oxidation and corrosion of metal components</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p><a href="sources.html" style="color: #781FFF; text-decoration: none;">Sources, Methodology & Limitations</a></p>
+        </footer>
+    </div>
+
+    <script src="calculations.js"></script>
+    <script src="material-profiles.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

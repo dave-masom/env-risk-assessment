@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sources & Methodology - Conserv Environmental Risk Analyzer</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .sources-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #781FFF;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .sources-container h1 {
+            font-size: 2em;
+            color: #434343;
+            margin-bottom: 10px;
+        }
+
+        .sources-container h2 {
+            font-size: 1.4em;
+            color: #434343;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #781FFF;
+            padding-bottom: 8px;
+        }
+
+        .sources-container h3 {
+            font-size: 1.1em;
+            color: #781FFF;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .sources-container p, .sources-container li {
+            line-height: 1.8;
+            color: #444;
+        }
+
+        .sources-container ul {
+            margin-left: 20px;
+        }
+
+        .sources-container li {
+            margin-bottom: 8px;
+        }
+
+        .limitation-box {
+            background: #fff3cd;
+            border-left: 4px solid #FFA726;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .limitation-box h3 {
+            color: #E65100;
+            margin-top: 0;
+        }
+
+        .methodology-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .source-section {
+            margin-bottom: 30px;
+        }
+
+        .citation {
+            font-style: italic;
+            color: #666;
+            font-size: 0.95em;
+        }
+    </style>
+</head>
+<body style="background: linear-gradient(135deg, #781FFF 0%, #42A5F5 100%);">
+    <div class="sources-container" style="background: white; border-radius: 8px; padding: 40px;">
+        <a href="index.html" class="back-link">← Back to Calculator</a>
+
+        <h1>Sources & Methodology</h1>
+        <p>This tool provides material-specific environmental risk assessment based on established preservation science research. Below you'll find our sources, methodology, and important limitations.</p>
+
+        <h2>Psychrometric Calculations</h2>
+        <div class="methodology-box">
+            <h3>Magnus Formula</h3>
+            <p>Dew point calculations use the Magnus formula for saturation vapor pressure:</p>
+            <p><code>SVP = 610.78 × exp((17.27 × T) / (237.7 + T))</code></p>
+            <p>Where T is temperature in Celsius and SVP is in Pascals. This formula is accurate within ±0.4% for temperatures between -40°C and 50°C.</p>
+
+            <h3>Absolute Humidity</h3>
+            <p>Calculated using the ideal gas law: <code>AH = (vapor pressure × 18.016) / (8.314 × T<sub>K</sub>)</code></p>
+            <p>Where 18.016 g/mol is the molecular weight of water and 8.314 J/(mol·K) is the gas constant.</p>
+        </div>
+
+        <h2>Primary Sources by Material Type</h2>
+
+        <div class="source-section">
+            <h3>General Collections</h3>
+            <ul>
+                <li><strong>ASHRAE Applications Handbook</strong> (2019) - Museums, Galleries, Archives and Libraries chapter</li>
+                <li><strong>NEDCC Preservation Leaflets</strong> - 2.1 Temperature, Relative Humidity, Light, and Air Quality</li>
+                <li><strong>Bizot Green Protocol</strong> (2023) - Environmental guidelines balancing preservation and sustainability</li>
+            </ul>
+            <p class="citation">Recommended: 16-25°C (60.8-77°F), 40-60% RH with ±10% daily fluctuation for general hygroscopic materials</p>
+        </div>
+
+        <div class="source-section">
+            <h3>Paper & Manuscripts</h3>
+            <ul>
+                <li><strong>Library of Congress</strong> - Care, Handling and Storage of Works on Paper</li>
+                <li><strong>NISO TR01</strong> - Environmental Guidelines for the Storage of Paper Records (2001)</li>
+                <li><strong>Smithsonian Institution Archives</strong> - Collections Care Guidelines</li>
+            </ul>
+            <p class="citation">Optimal: 65-70°F, 30-50% RH. RH control crucial as moisture catalyzes acid formation in paper.</p>
+        </div>
+
+        <div class="source-section">
+            <h3>Photographs</h3>
+            <ul>
+                <li><strong>Library of Congress</strong> - Information Leaflet on Care, Handling, and Storage of Photographs</li>
+                <li><strong>Image Permanence Institute (IPI)</strong> - Cold Storage Guidelines and Preservation Metrics</li>
+                <li><strong>NPS Conserve O Gram 14/10</strong> - Cold Storage for Photograph Collections</li>
+                <li><strong>ISO Standards</strong> - ISO 18911:2010 for imaging materials</li>
+            </ul>
+            <p class="citation">
+                B&W Photos: 60-68°F (extended-term ≤64°F), 30-40% RH<br>
+                Color Photos: 35-40°F (cold storage required), 30-40% RH. Chromogenic dyes deteriorate rapidly above 65°F.
+            </p>
+        </div>
+
+        <div class="source-section">
+            <h3>Textiles & Fabrics</h3>
+            <ul>
+                <li><strong>Smithsonian Museum Conservation Institute</strong> - Climate and Textiles Storage</li>
+                <li><strong>Canadian Conservation Institute</strong> - CCI Notes on Textiles and the Environment</li>
+                <li><strong>George Washington University Textile Museum</strong> - Conservation guidelines</li>
+            </ul>
+            <p class="citation">Optimal: 65-70°F, 45-55% RH. Stability essential - RH fluctuations cause fiber expansion/contraction leading to damage.</p>
+        </div>
+
+        <div class="source-section">
+            <h3>Leather & Parchment</h3>
+            <ul>
+                <li><strong>NPS Appendix S</strong> - Curatorial Care of Objects Made From Leather and Skin Products</li>
+                <li><strong>Canadian Conservation Institute</strong> - Caring for Leather, Skin and Fur</li>
+                <li><strong>Museum Guidelines (Australia)</strong> - Environmental conditions for museum collections</li>
+            </ul>
+            <p class="citation">Optimal: 64-68°F, 45-55% RH. Critical thresholds: &lt;35% RH causes desiccation and cracking, &gt;65% RH promotes mold and "red rot".</p>
+        </div>
+
+        <div class="source-section">
+            <h3>Metal Objects</h3>
+            <ul>
+                <li><strong>Canadian Conservation Institute</strong> - CCI Notes 9/2: Storage of Metals</li>
+                <li><strong>NPS Metal Objects Guide</strong> - Preservation of historic metal artifacts</li>
+                <li><strong>Museum Australia</strong> - Metals Collections Care</li>
+            </ul>
+            <p class="citation">
+                General metals: 60-68°F, 30-50% RH (≤55% max)<br>
+                Sensitive metals (iron, bronze): 60-68°F, 12-35% RH. Iron most stable at ≤12% RH. Contaminated iron requires &lt;35% RH.
+            </p>
+        </div>
+
+        <div class="source-section">
+            <h3>Magnetic Tape & Optical Media</h3>
+            <ul>
+                <li><strong>Library of Congress</strong> - Care, Handling, and Storage of Audio Visual Materials</li>
+                <li><strong>NEDCC Session 6</strong> - Storage and Handling of Media Collections</li>
+                <li><strong>CLIR</strong> - Magnetic Tape Storage and Handling Guide</li>
+                <li><strong>ISO 9660</strong> - Standard for optical media storage</li>
+            </ul>
+            <p class="citation">
+                Magnetic Tape: 50-65°F (permanent value: 46-50°F), 30-40% RH. Higher humidity causes binder hydrolysis.<br>
+                Optical Media: 64-70°F, 30-50% RH. Avoid thermal cycling.
+            </p>
+        </div>
+
+        <div class="source-section">
+            <h3>Wood & Furniture</h3>
+            <ul>
+                <li><strong>Canadian Conservation Institute</strong> - Wood preservation guidelines</li>
+                <li><strong>General Museum Guidelines</strong> - Environmental conditions for wooden objects</li>
+            </ul>
+            <p class="citation">Optimal: 65-70°F, 45-55% RH. Wood is highly hygroscopic - RH fluctuations cause warping, cracking, and joint failure.</p>
+        </div>
+
+        <h2>Fluctuation Thresholds</h2>
+        <div class="methodology-box">
+            <p><strong>Temperature Fluctuation:</strong></p>
+            <ul>
+                <li>General collections: ±4-5°F per 24 hours acceptable</li>
+                <li>Sensitive materials (photographs, paper): ±2-3°F recommended</li>
+            </ul>
+
+            <p><strong>Relative Humidity Fluctuation:</strong></p>
+            <ul>
+                <li>Bizot Green Protocol (2023): ±10% per 24 hours for general collections</li>
+                <li>Sensitive materials (paper, photographs, textiles): ±5% or less</li>
+                <li>Very sensitive materials (leather, wood): ±3-4% recommended</li>
+            </ul>
+
+            <p><em>Source: Bizot Green Protocol (2023), IIC/ICOM-CC Declaration (2014), ASHRAE Museum Guidelines</em></p>
+        </div>
+
+        <h2>Decay Risk Methodology</h2>
+        <p>Risk assessments are based on four decay mechanisms established by preservation research:</p>
+
+        <h3>1. Natural Aging</h3>
+        <p>Chemical deterioration driven primarily by temperature. Every 10°F increase approximately doubles the rate of chemical reactions (Arrhenius equation). Lower temperatures slow degradation for all organic materials.</p>
+
+        <h3>2. Mechanical Decay</h3>
+        <p>Physical damage from dimensional changes as materials expand/contract with RH fluctuations. Hygroscopic materials (paper, wood, textiles, leather) are most affected. Optimal RH ranges minimize stress.</p>
+
+        <h3>3. Mold Growth</h3>
+        <p>Fungal growth risk based on combined temperature and RH. Mold spores begin germinating above 65% RH, with risk increasing significantly at 70% RH combined with warm temperatures (70°F+). Organic materials are most susceptible.</p>
+        <p><em>Source: EPA Mold Prevention Guidelines, PMC Study on Temperature vs RH for Mold Prevention</em></p>
+
+        <h3>4. Metal Corrosion</h3>
+        <p>Oxidation and corrosion driven by moisture availability (dew point) and RH. Condensation at dew point dramatically accelerates metal corrosion. Different metals have specific RH thresholds below which corrosion is minimal.</p>
+
+        <h2>Important Limitations</h2>
+        <div class="limitation-box">
+            <h3>⚠️ This Tool Does NOT Replace Professional Assessment</h3>
+            <ul>
+                <li><strong>Simplified Risk Model:</strong> Real preservation risk depends on many factors beyond temperature and humidity, including: object condition, material composition, history, pollutants, light exposure, and handling practices.</li>
+
+                <li><strong>General Guidelines:</strong> Risk ratings are based on general material categories. Individual objects may have specific requirements based on their condition, provenance, or composition.</li>
+
+                <li><strong>Static Measurements:</strong> Single-point measurements don't capture trends, seasonal variations, or cyclical patterns. Continuous monitoring is essential for proper environmental management.</li>
+
+                <li><strong>No Air Quality Assessment:</strong> This tool doesn't account for pollutants, particulates, or air quality factors that significantly impact preservation.</li>
+
+                <li><strong>Fluctuation Estimates:</strong> Fluctuation analysis requires user-estimated values and doesn't replace continuous environmental monitoring systems.</li>
+
+                <li><strong>Sustainability Trade-offs:</strong> Optimal preservation conditions must be balanced against institutional sustainability goals and energy constraints. See Bizot Green Protocol (2023) for guidance on balancing preservation with environmental responsibility.</li>
+            </ul>
+        </div>
+
+        <h2>Best Practices for Use</h2>
+        <ul>
+            <li><strong>Use as a screening tool</strong> to identify potential environmental concerns</li>
+            <li><strong>Implement continuous monitoring</strong> using dataloggers or environmental monitoring systems</li>
+            <li><strong>Consult with conservators</strong> for collection-specific guidance and treatment decisions</li>
+            <li><strong>Consider material sensitivity</strong> when selecting collection types - choose the most sensitive material in mixed collections</li>
+            <li><strong>Document conditions over time</strong> to identify trends and seasonal patterns</li>
+            <li><strong>Balance preservation with sustainability</strong> using frameworks like the Bizot Green Protocol</li>
+        </ul>
+
+        <h2>Additional Resources</h2>
+        <ul>
+            <li><a href="https://www.cimam.org/sustainability-and-ecology-museum-practice/bizot-green-protocol/" target="_blank">Bizot Green Protocol (2023)</a></li>
+            <li><a href="https://www.nedcc.org/free-resources/preservation-leaflets" target="_blank">NEDCC Preservation Leaflets</a></li>
+            <li><a href="https://www.loc.gov/preservation/care/" target="_blank">Library of Congress - Collections Care</a></li>
+            <li><a href="https://www.canada.ca/en/conservation-institute/services/conservation-preservation-publications/canadian-conservation-institute-notes.html" target="_blank">Canadian Conservation Institute - CCI Notes</a></li>
+            <li><a href="https://www.iiconservation.org/" target="_blank">International Institute for Conservation (IIC)</a></li>
+            <li><a href="https://www.imagepermanenceinstitute.org/" target="_blank">Image Permanence Institute</a></li>
+        </ul>
+
+        <h2>Version & Updates</h2>
+        <p>This tool reflects preservation standards current as of January 2026. Environmental guidelines evolve as research progresses and sustainability considerations develop. Users should consult current professional standards and institutional policies.</p>
+
+        <p style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #ddd; color: #666; font-size: 0.9em;">
+            <strong>Note:</strong> This calculator is provided for educational and assessment purposes. While based on authoritative sources, it should be used as one component of a comprehensive preservation program, not as the sole decision-making tool for collection care.
+        </p>
+
+        <a href="index.html" class="back-link" style="margin-top: 30px;">← Back to Calculator</a>
+    </div>
+</body>
+</html>
