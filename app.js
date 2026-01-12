@@ -208,6 +208,12 @@ class CalculatorUI {
         this.currentMaterialType = 'general';
         this.autoCalculateEnabled = true;
 
+        // Create debounced calculation function
+        this.debouncedCalculate = new Debouncer(
+            () => this.autoCalculate(),
+            AppConfig.ui.debounceDelay
+        );
+
         this.setupEventListeners();
         this.updateCollectionInfo();
     }
@@ -230,13 +236,16 @@ class CalculatorUI {
             });
         });
 
-        // Input change handlers - auto-calculate on input
+        // Input change handlers - auto-calculate on input with debouncing
         Object.entries(this.inputs).forEach(([key, input]) => {
             input.addEventListener('input', () => {
+                // Clear field error when user starts typing
+                ErrorHandler.clearFieldError(input);
+
                 if (this.solveMode === key && input.value !== '') {
                     this.clearSolveMode();
                 }
-                this.autoCalculate();
+                this.debouncedCalculate.call();
             });
         });
 
@@ -311,18 +320,20 @@ class CalculatorUI {
         // Clear the input for the variable we're solving for
         this.inputs[variable].value = '';
 
-        // Visual feedback
+        // Update ARIA attributes and visual feedback
         document.querySelectorAll('.solve-btn').forEach(btn => {
-            btn.classList.remove('active');
+            const isActive = btn.dataset.solve === variable;
+            btn.classList.toggle('active', isActive);
+            btn.setAttribute('aria-pressed', isActive.toString());
         });
 
-        document.querySelector(`[data-solve="${variable}"]`).classList.add('active');
-
-        // Disable the input
+        // Disable the input and update accessibility
         Object.entries(this.inputs).forEach(([key, input]) => {
             if (key === variable) {
                 input.disabled = true;
                 input.classList.add('solving');
+                const label = input.previousElementSibling?.textContent || key;
+                input.setAttribute('aria-label', `${label} (solving for this value)`);
             }
         });
     }
@@ -332,11 +343,13 @@ class CalculatorUI {
 
         document.querySelectorAll('.solve-btn').forEach(btn => {
             btn.classList.remove('active');
+            btn.setAttribute('aria-pressed', 'false');
         });
 
         Object.values(this.inputs).forEach(input => {
             input.disabled = false;
             input.classList.remove('solving');
+            input.removeAttribute('aria-label'); // Remove custom label
         });
     }
 
@@ -358,14 +371,29 @@ class CalculatorUI {
 
     autoCalculate() {
         try {
+            // Clear previous errors
+            ErrorHandler.clearAllErrors();
+
             const inputValues = this.getInputValues();
+
+            // Validate each non-null input
+            for (const [key, value] of Object.entries(inputValues)) {
+                if (value !== null && key !== this.solveMode) {
+                    const validation = InputValidator.validateInput(key, value);
+                    if (!validation.valid) {
+                        ErrorHandler.showFieldError(this.inputs[key], validation.error);
+                        this.decaySection.style.display = 'none';
+                        return;
+                    }
+                }
+            }
 
             // Count how many values are provided
             const provided = Object.values(inputValues)
                 .filter(v => v !== null && v !== undefined && v !== '').length;
 
             // Need at least 2 values
-            if (provided < 2) {
+            if (provided < AppConfig.calculation.minInputsRequired) {
                 // Hide decay section if not enough values
                 this.decaySection.style.display = 'none';
                 // Clear calculated styling
@@ -399,8 +427,13 @@ class CalculatorUI {
             this.clearSolveMode();
 
         } catch (error) {
-            // Silently fail for auto-calculation
-            console.error('Auto-calculation error:', error);
+            // Handle calculation errors with user feedback
+            ErrorHandler.handleCalculationError(error);
+            ErrorHandler.logError(error, {
+                context: 'autoCalculate',
+                inputs: this.getInputValues(),
+                materialType: this.currentMaterialType
+            });
             this.decaySection.style.display = 'none';
         }
     }
@@ -425,7 +458,7 @@ class CalculatorUI {
                 // Update if field was empty OR if it was previously calculated
                 // This allows calculated fields to update when user changes input values
                 if (isEmpty[key] || wasCalculated[key]) {
-                    const precision = key === 'absoluteHumidity' ? 2 : 1;
+                    const precision = AppConfig.calculation.decimalPrecision[key] || 1;
                     // Format value appropriately - remove unnecessary decimals
                     let formattedValue = value.toFixed(precision);
                     // Remove trailing zeros and decimal point if whole number
@@ -485,7 +518,7 @@ class CalculatorUI {
 
         // If no fluctuation values entered, show default message
         if (isNaN(tempFluc) && isNaN(rhFluc)) {
-            this.fluctuationMessage.innerHTML = 'Enter 24-hour fluctuation values above to assess environmental stability for this material type.';
+            this.fluctuationMessage.textContent = 'Enter 24-hour fluctuation values above to assess environmental stability for this material type.';
             return;
         }
 
@@ -536,9 +569,9 @@ class CalculatorUI {
             }
         }
 
-        // Display warnings or positive feedback
+        // Display warnings or positive feedback (using safe DOM manipulation)
         if (warnings.length > 0) {
-            this.fluctuationMessage.innerHTML = '⚠️ ' + warnings.join(' ');
+            this.setFluctuationMessage('⚠️', warnings.join(' '));
             this.fluctuationWarning.classList.add('warning');
         } else {
             // Show positive feedback
@@ -551,13 +584,33 @@ class CalculatorUI {
             }
 
             if (goodNews.length > 0) {
-                this.fluctuationMessage.innerHTML = '✓ ' + goodNews.join(' ');
+                this.setFluctuationMessage('✓', goodNews.join(' '));
                 this.fluctuationWarning.classList.add('success');
             } else {
                 // Neutral/acceptable state
-                this.fluctuationMessage.innerHTML = 'Environmental fluctuation levels are within acceptable ranges for ' + profile.name.toLowerCase() + '.';
+                this.setFluctuationMessage('', `Environmental fluctuation levels are within acceptable ranges for ${profile.name.toLowerCase()}.`);
             }
         }
+    }
+
+    /**
+     * Safely set fluctuation message (prevents XSS)
+     * @param {string} icon - Icon to display (e.g., '⚠️', '✓')
+     * @param {string} message - Message text
+     */
+    setFluctuationMessage(icon, message) {
+        // Clear existing content
+        this.fluctuationMessage.textContent = '';
+
+        if (icon) {
+            const iconSpan = document.createElement('span');
+            iconSpan.textContent = icon + ' ';
+            iconSpan.setAttribute('aria-hidden', 'true');
+            this.fluctuationMessage.appendChild(iconSpan);
+        }
+
+        const textNode = document.createTextNode(message);
+        this.fluctuationMessage.appendChild(textNode);
     }
 
     clearAll() {
