@@ -242,6 +242,10 @@ class CalculatorUI {
                 // Clear field error when user starts typing
                 ErrorHandler.clearFieldError(input);
 
+                // Remove 'calculated' class when user types in a field
+                // This marks it as a user-entered value, not a calculated one
+                input.classList.remove('calculated');
+
                 if (this.solveMode === key && input.value !== '') {
                     this.clearSolveMode();
                 }
