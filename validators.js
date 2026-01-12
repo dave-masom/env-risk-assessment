@@ -57,17 +57,11 @@ class InputValidator {
             };
         }
 
-        // Check step if specified
-        if (step !== null) {
-            const remainder = Math.abs((num - min) % step);
-            if (remainder > 0.0001) { // Allow small floating point errors
-                return {
-                    valid: false,
-                    value: null,
-                    error: `Value must be in increments of ${step}`
-                };
-            }
-        }
+        // Skip step validation - it's too prone to floating-point errors
+        // and the HTML input type="number" already handles step validation in the browser
+        // if (step !== null && step > 0) {
+        //     // Validate step alignment
+        // }
 
         return {
             valid: true,

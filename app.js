@@ -274,7 +274,10 @@ class CalculatorUI {
                 // Remove calculated class since user is manually adjusting
                 input.classList.remove('calculated');
 
-                // Trigger auto-calculation
+                // Clear any field errors
+                ErrorHandler.clearFieldError(input);
+
+                // Trigger auto-calculation (use immediate, not debounced for buttons)
                 this.autoCalculate();
 
                 // If this is a fluctuation input, analyze fluctuation
