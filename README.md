@@ -2,6 +2,12 @@
 
 A comprehensive environmental assessment tool designed for analyzing collection environments in museums, libraries, and archives. This tool provides material-specific risk analysis, psychrometric calculations, and stability assessment to help preservation professionals evaluate and optimize environmental conditions.
 
+**🚀 [Live Demo](https://YOUR_USERNAME.github.io/dew-point-calculator/)** _(Replace YOUR_USERNAME with your GitHub username)_
+
+![License](https://img.shields.io/badge/license-Free%20for%20Education-blue)
+![WCAG](https://img.shields.io/badge/WCAG-2.1%20AA-green)
+![Browser](https://img.shields.io/badge/browser-modern%20browsers-brightgreen)
+
 ## Features
 
 ### Material-Specific Risk Assessment
