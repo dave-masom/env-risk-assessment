@@ -267,6 +267,11 @@ class CalculatorUI {
 
                 // Trigger auto-calculation
                 this.autoCalculate();
+
+                // If this is a fluctuation input, analyze fluctuation
+                if (this.fluctuationInputs[inputId]) {
+                    this.analyzeFluctuation();
+                }
             });
         });
 
@@ -283,6 +288,8 @@ class CalculatorUI {
             this.updateCollectionInfo();
             // Re-calculate if we have values
             this.autoCalculate();
+            // Re-analyze fluctuation with new material type
+            this.analyzeFluctuation();
         });
     }
 
@@ -473,9 +480,12 @@ class CalculatorUI {
         const tempFluc = parseFloat(this.fluctuationInputs.tempFluctuation.value);
         const rhFluc = parseFloat(this.fluctuationInputs.rhFluctuation.value);
 
-        // If no fluctuation values entered, hide warning
+        // Reset to default state
+        this.fluctuationWarning.classList.remove('warning', 'success');
+
+        // If no fluctuation values entered, show default message
         if (isNaN(tempFluc) && isNaN(rhFluc)) {
-            this.fluctuationWarning.classList.remove('show');
+            this.fluctuationMessage.innerHTML = 'Enter 24-hour fluctuation values above to assess environmental stability for this material type.';
             return;
         }
 
@@ -526,10 +536,10 @@ class CalculatorUI {
             }
         }
 
-        // Display warnings or hide
+        // Display warnings or positive feedback
         if (warnings.length > 0) {
-            this.fluctuationMessage.innerHTML = warnings.join(' ');
-            this.fluctuationWarning.classList.add('show');
+            this.fluctuationMessage.innerHTML = '⚠️ ' + warnings.join(' ');
+            this.fluctuationWarning.classList.add('warning');
         } else {
             // Show positive feedback
             const goodNews = [];
@@ -542,12 +552,10 @@ class CalculatorUI {
 
             if (goodNews.length > 0) {
                 this.fluctuationMessage.innerHTML = '✓ ' + goodNews.join(' ');
-                this.fluctuationWarning.classList.add('show');
-                this.fluctuationWarning.style.borderColor = '#4CAF50';
-                this.fluctuationWarning.style.background = '#e8f5e9';
-                this.fluctuationWarning.querySelector('h4').style.color = '#2E7D32';
+                this.fluctuationWarning.classList.add('success');
             } else {
-                this.fluctuationWarning.classList.remove('show');
+                // Neutral/acceptable state
+                this.fluctuationMessage.innerHTML = 'Environmental fluctuation levels are within acceptable ranges for ' + profile.name.toLowerCase() + '.';
             }
         }
     }

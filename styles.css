@@ -219,26 +219,19 @@ h2 {
     font-weight: 600;
 }
 
-/* Fluctuation Section */
-.fluctuation-section {
+/* Fluctuation Inputs */
+.fluctuation-inputs {
     margin-top: 15px;
     padding: 12px 15px;
-    background: linear-gradient(135deg, #fff8e1 0%, #ffecb3 100%);
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
     border-radius: 6px;
-    border-left: 4px solid #FFA726;
+    border-left: 3px solid #781FFF;
 }
 
-.fluctuation-section h3 {
+.fluctuation-inputs h3 {
     font-size: 0.95em;
-    margin-bottom: 5px;
-    color: #434343;
-}
-
-.fluctuation-info {
-    font-size: 0.75em;
-    color: #666;
     margin-bottom: 10px;
-    font-style: italic;
+    color: #434343;
 }
 
 .fluctuation-grid {
@@ -247,33 +240,49 @@ h2 {
     gap: 12px;
 }
 
-.fluctuation-warning {
-    background: #fff3cd;
-    border: 2px solid #FFA726;
+/* Stability Assessment in Risk Section */
+.stability-assessment {
+    margin-bottom: 15px;
+}
+
+.stability-assessment h3 {
+    font-size: 0.95em;
+    margin-bottom: 8px;
+    color: #434343;
+}
+
+.fluctuation-feedback {
+    background: #f8f9fa;
+    border: 2px solid #ddd;
     border-radius: 6px;
     padding: 10px 12px;
-    margin-top: 12px;
-    display: none;
 }
 
-.fluctuation-warning.show {
-    display: block;
-}
-
-.fluctuation-warning h4 {
-    font-size: 0.85em;
-    color: #E65100;
-    margin-bottom: 5px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
-.fluctuation-warning p {
-    font-size: 0.75em;
+.fluctuation-feedback p {
+    font-size: 0.8em;
     color: #666;
     line-height: 1.4;
     margin: 0;
+}
+
+/* Warning state */
+.fluctuation-feedback.warning {
+    background: #fff3cd;
+    border-color: #FFA726;
+}
+
+.fluctuation-feedback.warning p {
+    color: #E65100;
+}
+
+/* Success state */
+.fluctuation-feedback.success {
+    background: #e8f5e9;
+    border-color: #4CAF50;
+}
+
+.fluctuation-feedback.success p {
+    color: #2E7D32;
 }
 
 .solve-btn {

@@ -82,9 +82,8 @@
                     </div>
                 </div>
 
-                <div class="fluctuation-section">
+                <div class="fluctuation-inputs">
                     <h3>24-Hour Fluctuation (Optional)</h3>
-                    <p class="fluctuation-info">Environmental stability is critical for preservation. Enter typical daily fluctuations if known.</p>
                     <div class="fluctuation-grid">
                         <div class="input-group">
                             <label for="tempFluctuation">Temp Variation (±°F)</label>
@@ -102,10 +101,6 @@
                                 <button class="increment-btn" data-input="rhFluctuation">+</button>
                             </div>
                         </div>
-                    </div>
-                    <div class="fluctuation-warning" id="fluctuationWarning">
-                        <h4>⚠️ Stability Concern</h4>
-                        <p id="fluctuationMessage"></p>
                     </div>
                 </div>
 
@@ -128,6 +123,13 @@
                             <span class="range-label">Relative Humidity:</span>
                             <span class="range-value" id="optimalRH">-</span>
                         </div>
+                    </div>
+                </div>
+
+                <div class="stability-assessment" id="stabilityAssessment">
+                    <h3>Environmental Stability Assessment</h3>
+                    <div id="fluctuationWarning" class="fluctuation-feedback">
+                        <p id="fluctuationMessage">Enter 24-hour fluctuation values above to assess environmental stability for this material type.</p>
                     </div>
                 </div>
 
