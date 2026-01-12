@@ -204,7 +204,6 @@ class CalculatorUI {
         this.fluctuationWarning = document.getElementById('fluctuationWarning');
         this.fluctuationMessage = document.getElementById('fluctuationMessage');
 
-        this.solveMode = null; // Track which variable to solve for
         this.currentMaterialType = 'general';
         this.autoCalculateEnabled = true;
 
@@ -222,20 +221,6 @@ class CalculatorUI {
         // Clear button
         this.clearBtn.addEventListener('click', () => this.clearAll());
 
-        // Solve buttons - toggle on/off
-        document.querySelectorAll('.solve-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const solveFor = e.target.dataset.solve;
-
-                // If this variable is already in solve mode, turn it off
-                if (this.solveMode === solveFor) {
-                    this.clearSolveMode();
-                } else {
-                    this.setSolveMode(solveFor);
-                }
-            });
-        });
-
         // Input change handlers - auto-calculate on input with debouncing
         Object.entries(this.inputs).forEach(([key, input]) => {
             input.addEventListener('input', () => {
@@ -246,9 +231,6 @@ class CalculatorUI {
                 // This marks it as a user-entered value, not a calculated one
                 input.classList.remove('calculated');
 
-                if (this.solveMode === key && input.value !== '') {
-                    this.clearSolveMode();
-                }
                 this.debouncedCalculate.call();
             });
         });
@@ -321,56 +303,12 @@ class CalculatorUI {
         }
     }
 
-    setSolveMode(variable) {
-        this.solveMode = variable;
-
-        // Clear the input for the variable we're solving for
-        this.inputs[variable].value = '';
-
-        // Update ARIA attributes and visual feedback
-        document.querySelectorAll('.solve-btn').forEach(btn => {
-            const isActive = btn.dataset.solve === variable;
-            btn.classList.toggle('active', isActive);
-            btn.setAttribute('aria-pressed', isActive.toString());
-        });
-
-        // Disable the input and update accessibility
-        Object.entries(this.inputs).forEach(([key, input]) => {
-            if (key === variable) {
-                input.disabled = true;
-                input.classList.add('solving');
-                const label = input.previousElementSibling?.textContent || key;
-                input.setAttribute('aria-label', `${label} (solving for this value)`);
-            }
-        });
-    }
-
-    clearSolveMode() {
-        this.solveMode = null;
-
-        document.querySelectorAll('.solve-btn').forEach(btn => {
-            btn.classList.remove('active');
-            btn.setAttribute('aria-pressed', 'false');
-        });
-
-        Object.values(this.inputs).forEach(input => {
-            input.disabled = false;
-            input.classList.remove('solving');
-            input.removeAttribute('aria-label'); // Remove custom label
-        });
-    }
-
     getInputValues() {
         const values = {};
 
         Object.entries(this.inputs).forEach(([key, input]) => {
             const value = input.value.trim();
-            // Skip the value we're solving for
-            if (key === this.solveMode) {
-                values[key] = null;
-            } else {
-                values[key] = value === '' ? null : parseFloat(value);
-            }
+            values[key] = value === '' ? null : parseFloat(value);
         });
 
         return values;
@@ -385,7 +323,7 @@ class CalculatorUI {
 
             // Validate each non-null input
             for (const [key, value] of Object.entries(inputValues)) {
-                if (value !== null && key !== this.solveMode) {
+                if (value !== null) {
                     const validation = InputValidator.validateInput(key, value);
                     if (!validation.valid) {
                         ErrorHandler.showFieldError(this.inputs[key], validation.error);
@@ -429,9 +367,6 @@ class CalculatorUI {
 
             // Display optimal conditions for material
             this.displayOptimalConditions();
-
-            // Clear solve mode
-            this.clearSolveMode();
 
         } catch (error) {
             // Handle calculation errors with user feedback
@@ -623,8 +558,6 @@ class CalculatorUI {
     clearAll() {
         Object.values(this.inputs).forEach(input => {
             input.value = '';
-            input.disabled = false;
-            input.classList.remove('solving');
             input.classList.remove('calculated');
         });
 
@@ -640,8 +573,6 @@ class CalculatorUI {
         this.fluctuationWarning.style.borderColor = '#FFA726';
         this.fluctuationWarning.style.background = '#fff3cd';
         this.fluctuationWarning.querySelector('h4').style.color = '#E65100';
-
-        this.clearSolveMode();
     }
 }
 

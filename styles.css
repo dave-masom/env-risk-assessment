@@ -681,6 +681,11 @@ button:focus-visible {
         width: 100%;
     }
 
+    /* Stack all input fields vertically on mobile */
+    .input-grid {
+        grid-template-columns: 1fr;
+    }
+
     .decay-grid {
         grid-template-columns: 1fr;
     }
