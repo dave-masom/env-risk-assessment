@@ -51,18 +51,12 @@ Assess the impact of temperature and RH fluctuations on collection materials:
 ## Usage
 
 ### Basic Operation
-1. Open `index.html` in a web browser
-2. **Select your collection type** from the dropdown menu
-3. Enter values for any 2 environmental parameters (calculations update automatically)
-4. Optionally enter 24-hour fluctuation values to assess stability
-5. Review material-specific decay risk ratings and optimal conditions
+1. **Select your collection type** from the dropdown menu
+2. Enter values for any 2 environmental parameters (calculations update automatically)
+3. Optionally enter 24-hour fluctuation values to assess stability
+4. Review material-specific decay risk ratings and optimal conditions
 
-### Solve Mode
-You can also use the "Solve for" buttons to specify which variable you want to calculate:
-1. Click one of the "Solve for X" buttons
-2. That field will be cleared and disabled
-3. Enter values for 2 or more of the remaining fields
-4. Click "Calculate" to solve for the selected variable
+The calculator automatically computes missing values as you type. Enter any 2 or more parameters and the rest are calculated instantly.
 
 ### Example Scenarios
 
@@ -74,10 +68,9 @@ You can also use the "Solve for" buttons to specify which variable you want to c
 - Enter: Temperature = 68°F, Dew Point = 50°F
 - Results: RH ≈ 54%, Absolute Humidity ≈ 7.9 g/m³
 
-**Example 3: Solve for temperature**
-- Click "Solve for Temp"
+**Example 3: Know RH and dew point**
 - Enter: RH = 40%, Dew Point = 45°F
-- Results: Temperature ≈ 65.8°F
+- Results: Temperature ≈ 65.8°F, Absolute Humidity ≈ 5.8 g/m³
 
 ## Understanding Decay Risk Ratings
 
